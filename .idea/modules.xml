@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/javaapkcomWelcome/javaapkcomWelcome.iml" filepath="$PROJECT_DIR$/javaapkcomWelcome/javaapkcomWelcome.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library_SlidingMenu/library_SlidingMenu.iml" filepath="$PROJECT_DIR$/library_SlidingMenu/library_SlidingMenu.iml" />
+      <module fileurl="file://$PROJECT_DIR$/testTopNews.iml" filepath="$PROJECT_DIR$/testTopNews.iml" />
+    </modules>
+  </component>
+</project>
