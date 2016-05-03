@@ -19,7 +19,7 @@
         android:layout_centerInParent="true"
         android:src="@drawable/detail_loading" />
 
-    <com.topnews.view.HeadListView
+    <com.topnews.view.xlistview.XListView
         android:id="@+id/mListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -30,11 +30,7 @@ import com.topnews.view.ColumnHorizontalScrollView;
 import com.topnews.view.DrawerView;
 
 import java.util.ArrayList;
-/**
- * （android高仿系列）今日头条 --新闻阅读器  
- * author:RA
- * blog : http://blog.csdn.net/vipzjyno1/
- */
+
 public class MainActivity extends FragmentActivity {
 	/** 自定义HorizontalScrollView */
 	private ColumnHorizontalScrollView mColumnHorizontalScrollView;

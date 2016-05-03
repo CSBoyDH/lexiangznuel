@@ -3,7 +3,6 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 22
     buildToolsVersion "23.0.2"
-    android.compileOptions.encoding = "GBK"
 
     defaultConfig {
         applicationId "com.topnews"
@@ -22,6 +21,6 @@ android {
 
 dependencies {
     compile project(':library_SlidingMenu')
-    compile files('libs/jsoup-1.7.2.jar')
+    compile 'org.jsoup:jsoup:1.9.1'
     compile files('libs/universal-image-loader-1.9.2-SNAPSHOT-with-sources.jar')
 }

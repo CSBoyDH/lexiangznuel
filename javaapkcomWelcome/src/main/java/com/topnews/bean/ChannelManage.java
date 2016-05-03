@@ -28,10 +28,10 @@ public class ChannelManage {
 		defaultOtherChannels = new ArrayList<ChannelItem>();
 		defaultUserChannels.add(new ChannelItem(1, "推荐", 1, 1));
 		defaultUserChannels.add(new ChannelItem(2, "热点", 2, 1));
-		defaultUserChannels.add(new ChannelItem(3, "杭州", 3, 1));
+		defaultUserChannels.add(new ChannelItem(3, "通知", 3, 1));
 		defaultUserChannels.add(new ChannelItem(4, "时尚", 4, 1));
 		defaultUserChannels.add(new ChannelItem(5, "科技", 5, 1));
-		defaultUserChannels.add(new ChannelItem(6, "体育", 6, 1));
+	/*	defaultUserChannels.add(new ChannelItem(6, "体育", 6, 1));
 		defaultUserChannels.add(new ChannelItem(7, "军事", 7, 1));
 		defaultOtherChannels.add(new ChannelItem(8, "财经", 1, 0));
 		defaultOtherChannels.add(new ChannelItem(9, "汽车", 2, 0));
@@ -43,8 +43,8 @@ public class ChannelManage {
 		defaultOtherChannels.add(new ChannelItem(15, "健康", 8, 0));
 		defaultOtherChannels.add(new ChannelItem(16, "美女", 9, 0));
 		defaultOtherChannels.add(new ChannelItem(17, "游戏", 10, 0));
-		defaultOtherChannels.add(new ChannelItem(18, "数码", 11, 0));
-		defaultUserChannels.add(new ChannelItem(19, "娱乐", 12, 0));
+		defaultOtherChannels.add(new ChannelItem(18, "数码", 11, 0));*/
+		defaultUserChannels.add(new ChannelItem(6, "娱乐", 12, 0));
 	}
 
 	private ChannelManage(SQLHelper paramDBHelper) throws SQLException {
