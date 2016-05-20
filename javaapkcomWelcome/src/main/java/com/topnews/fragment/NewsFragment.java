@@ -1,14 +1,5 @@
 package com.topnews.fragment;
 
-import java.util.ArrayList;
-
-import com.topnews.DetailsActivity;
-import com.topnews.R;
-import com.topnews.adapter.NewsAdapter;
-import com.topnews.bean.NewsEntity;
-import com.topnews.tool.Constants;
-import com.topnews.view.HeadListView;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -26,10 +16,20 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class NewsFragment extends Fragment {
+import com.topnews.NewsDetailsActivity;
+import com.topnews.R;
+import com.topnews.adapter.NewsAdapter;
+import com.topnews.app.AppApplication;
+import com.topnews.bean.News;
+import com.topnews.tool.NewsTools;
+import com.topnews.view.HeadListView;
+
+import java.util.ArrayList;
+
+public class NewsFragment extends Fragment{
 	private final static String TAG = "NewsFragment";
 	Activity activity;
-	ArrayList<NewsEntity> newsList = new ArrayList<NewsEntity>();
+	ArrayList<News> newses = new ArrayList<News>();
 	HeadListView mListView;
 	NewsAdapter mAdapter;
 	String text;
@@ -39,49 +39,60 @@ public class NewsFragment extends Fragment {
 	//Toast提示框
 	private RelativeLayout notify_view;
 	private TextView notify_view_text;
+    //类别对应的获取新闻条目的url
+    private String url;
+    
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		Bundle args = getArguments();
 		text = args != null ? args.getString("text") : "";
 		channel_id = args != null ? args.getInt("id", 0) : 0;
-		initData();
+        url = AppApplication.getApp().getConfig().getUrlByID(channel_id);
+		initData(url);
 		super.onCreate(savedInstanceState);
 	}
 
-	@Override
+//    @Override
+//    public void setArguments(Bundle args)
+//    {
+//        url = Config.getUrlByID(args.getInt("id"));
+//        super.setArguments(args);
+//    }
+
+    @Override
 	public void onAttach(Activity activity) {
 		// TODO Auto-generated method stub
 		this.activity = activity;
 		super.onAttach(activity);
 	}
-	/** 此方法意思为fragment是否可见 ,可见时候加载数据 */
-	@Override
-	public void setUserVisibleHint(boolean isVisibleToUser) {
-		if (isVisibleToUser) {
-			//fragment可见时加载数据
-			if(newsList !=null && newsList.size() !=0){
-				handler.obtainMessage(SET_NEWSLIST).sendToTarget();
-			}else{
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						try {
-							Thread.sleep(2);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						handler.obtainMessage(SET_NEWSLIST).sendToTarget();
-					}
-				}).start();
-			}
-		}else{
-			//fragment不可见时不执行操作
-		}
-		super.setUserVisibleHint(isVisibleToUser);
-	}
+//	/** 此方法意思为fragment是否可见 ,可见时候加载数据 */
+//	@Override
+//	public void setUserVisibleHint(boolean isVisibleToUser) {
+//		if (isVisibleToUser) {
+//			//fragment可见时加载数据
+//			if(newses !=null && newses.size() !=0){
+//				handler.obtainMessage(SET_NEWSLIST).sendToTarget();
+//			}else{
+//				new Thread(new Runnable() {
+//					@Override
+//					public void run() {
+//						// TODO Auto-generated method stub
+//						try {
+//							Thread.sleep(2);
+//						} catch (InterruptedException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						}
+//						handler.obtainMessage(SET_NEWSLIST).sendToTarget();
+//					}
+//				}).start();
+//			}
+//		}else{
+//			//fragment不可见时不执行操作
+//		}
+//		super.setUserVisibleHint(isVisibleToUser);
+//	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -98,8 +109,17 @@ public class NewsFragment extends Fragment {
 		return view;
 	}
 
-	private void initData() {
-		newsList = Constants.getNewsList();
+	private void initData(final String url) {
+		//新开线程连接网络获取新闻数据
+		new Thread(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+                newses = NewsTools.getNewsList(url, 1);
+                handler.obtainMessage(SET_NEWSLIST).sendToTarget();
+			}
+		}).start();
 	}
 	
 	Handler handler = new Handler() {
@@ -110,7 +130,7 @@ public class NewsFragment extends Fragment {
 			case SET_NEWSLIST:
 				detail_loading.setVisibility(View.GONE);
 				if(mAdapter == null){
-					mAdapter = new NewsAdapter(activity, newsList);
+					mAdapter = new NewsAdapter(activity, newses);
 					//判断是不是城市的频道
 					/*if(channel_id == Constants.CHANNEL_CITY){
 						//是城市频道
@@ -126,17 +146,10 @@ public class NewsFragment extends Fragment {
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view,
 							int position, long id) {
-						Intent intent = new Intent(activity, DetailsActivity.class);
-						/*if(channel_id == Constants.CHANNEL_CITY){
-							if(position != 0){
-								intent.putExtra("news", mAdapter.getItem(position - 1));
-								startActivity(intent);
-								activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-							}
-						}else{}*/
-							intent.putExtra("news", mAdapter.getItem(position));
-							startActivity(intent);
-							activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        Intent intent = new Intent(activity, NewsDetailsActivity.class);
+                        News news = mAdapter.getNewses().get(position);
+                        intent.putExtra("url", "http://wellan.zuel.edu.cn/"+news.getUrl());
+                        startActivity(intent);
 
 					}
 				});

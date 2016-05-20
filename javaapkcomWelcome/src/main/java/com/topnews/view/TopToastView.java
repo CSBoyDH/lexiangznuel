@@ -2,7 +2,6 @@ package com.topnews.view;
 
 import android.content.Context;
 import android.view.Gravity;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;

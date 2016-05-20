@@ -31,9 +31,6 @@ import com.topnews.view.DrawerView;
 
 import java.util.ArrayList;
 /**
- * （android高仿系列）今日头条 --新闻阅读器  
- * author:RA
- * blog : http://blog.csdn.net/vipzjyno1/
  */
 public class MainActivity extends FragmentActivity {
 	/** 自定义HorizontalScrollView */
@@ -160,6 +157,7 @@ public class MainActivity extends FragmentActivity {
 			columnTextView.setBackgroundResource(R.drawable.radio_button_bg);
 			columnTextView.setGravity(Gravity.CENTER);
 			columnTextView.setPadding(5, 5, 5, 5);
+			columnTextView.setTextSize(13);
 			columnTextView.setId(i);
 			columnTextView.setText(userChannelList.get(i).getName());
 			columnTextView.setTextColor(getResources().getColorStateList(R.color.top_category_scroll_text_color_day));

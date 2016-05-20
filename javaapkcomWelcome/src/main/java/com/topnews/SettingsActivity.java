@@ -1,10 +1,8 @@
 package com.topnews;
 
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.topnews.base.BaseActivity;

@@ -10,6 +10,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.StorageUtils;
+import com.topnews.config.Config;
 import com.topnews.db.SQLHelper;
 
 import java.io.File;
@@ -17,6 +18,7 @@ import java.io.File;
 public class AppApplication extends Application {
 	private static AppApplication mAppApplication;
 	private SQLHelper sqlHelper;
+	private Config config;
 	
 	@Override
 	public void onCreate() {
@@ -36,6 +38,13 @@ public class AppApplication extends Application {
 		if (sqlHelper == null)
 			sqlHelper = new SQLHelper(mAppApplication);
 		return sqlHelper;
+	}
+	
+	public Config getConfig()
+	{
+		if(config == null)
+			config = new Config();
+		return config;
 	}
 	
 	@Override
