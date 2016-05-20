@@ -73,7 +73,7 @@ public class MainActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		mScreenWidth = BaseTools.getWindowsWidth(this);
-		mItemWidth = mScreenWidth / 7;// 一个Item宽度为屏幕的1/7
+		mItemWidth = mScreenWidth / 5;// 一个Item宽度为屏幕的1/7
 		initView();
 		initSlidingMenu();
 	}
@@ -157,7 +157,7 @@ public class MainActivity extends FragmentActivity {
 			columnTextView.setBackgroundResource(R.drawable.radio_button_bg);
 			columnTextView.setGravity(Gravity.CENTER);
 			columnTextView.setPadding(5, 5, 5, 5);
-			columnTextView.setTextSize(13);
+			columnTextView.setSingleLine();
 			columnTextView.setId(i);
 			columnTextView.setText(userChannelList.get(i).getName());
 			columnTextView.setTextColor(getResources().getColorStateList(R.color.top_category_scroll_text_color_day));
