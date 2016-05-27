@@ -13,13 +13,13 @@ public interface ChannelDaoInface {
 	public boolean deleteCache(String whereClause, String[] whereArgs);
 
 	public boolean updateCache(ContentValues values, String whereClause,
-			String[] whereArgs);
+							   String[] whereArgs);
 
 	public Map<String, String> viewCache(String selection,
-			String[] selectionArgs);
+										 String[] selectionArgs);
 
 	public List<Map<String, String>> listCache(String selection,
-			String[] selectionArgs);
+											   String[] selectionArgs);
 
 	public void clearFeedTable();
 }

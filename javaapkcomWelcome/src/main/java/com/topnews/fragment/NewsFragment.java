@@ -23,6 +23,7 @@ import com.topnews.app.AppApplication;
 import com.topnews.bean.News;
 import com.topnews.tool.NewsTools;
 import com.topnews.view.HeadListView;
+import com.topnews.view.xlistview.XListView;
 
 import java.util.ArrayList;
 
@@ -30,7 +31,7 @@ public class NewsFragment extends Fragment{
 	private final static String TAG = "NewsFragment";
 	Activity activity;
 	ArrayList<News> newses = new ArrayList<News>();
-	HeadListView mListView;
+	XListView mListView;
 	NewsAdapter mAdapter;
 	String text;
 	int channel_id;
@@ -99,7 +100,7 @@ public class NewsFragment extends Fragment{
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		View view = LayoutInflater.from(getActivity()).inflate(R.layout.news_fragment, null);
-		mListView = (HeadListView) view.findViewById(R.id.mListView);
+		mListView = (XListView) view.findViewById(R.id.mListView);
 		TextView item_textview = (TextView)view.findViewById(R.id.item_textview);
 		detail_loading = (ImageView)view.findViewById(R.id.detail_loading);
 		//ToastÌáÊ¾¿ò
@@ -140,7 +141,7 @@ public class NewsFragment extends Fragment{
 				}
 				mListView.setAdapter(mAdapter);
 				mListView.setOnScrollListener(mAdapter);
-				mListView.setPinnedHeaderView(LayoutInflater.from(activity).inflate(R.layout.list_item_section, mListView, false));
+			//	mListView.setPinnedHeaderView(LayoutInflater.from(activity).inflate(R.layout.list_item_section, mListView, false));
 				mListView.setOnItemClickListener(new OnItemClickListener() {
 
 					@Override

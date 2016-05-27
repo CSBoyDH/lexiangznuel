@@ -274,7 +274,7 @@ public class XListView extends ListView implements OnScrollListener {
 		case MotionEvent.ACTION_MOVE:
 			final float deltaY = ev.getRawY() - mLastY;
 			mLastY = ev.getRawY();
-			System.out.println("数据监测�?" + getFirstVisiblePosition() + "---->"
+			System.out.println("数据监测" + getFirstVisiblePosition() + "---->"
 					+ getLastVisiblePosition());
 			if (getFirstVisiblePosition() == 0
 					&& (mHeaderView.getVisiableHeight() > 0 || deltaY > 0)) {
