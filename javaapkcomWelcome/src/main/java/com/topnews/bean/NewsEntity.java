@@ -9,7 +9,7 @@ public class NewsEntity implements Serializable {
 	/** 新闻类型 */
 	private String newsCategory;
 	/** 标记状态，如推荐之类的 */
-	private Integer mark;;
+	private Integer mark;
 	/** 评论数量 */
 	private Integer commentNum;
 	/** ID */
