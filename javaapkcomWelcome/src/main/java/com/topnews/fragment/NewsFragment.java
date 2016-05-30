@@ -2,9 +2,11 @@ package com.topnews.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,22 +29,26 @@ import com.topnews.view.xlistview.XListView;
 
 import java.util.ArrayList;
 
-public class NewsFragment extends Fragment{
+public class NewsFragment extends Fragment implements XListView.IXListViewListener{
 	private final static String TAG = "NewsFragment";
 	Activity activity;
 	ArrayList<News> newses = new ArrayList<News>();
+	private Handler mHandler;
+	private View viewFragment;
 	XListView mListView;
+	private int start = 0;
+	private static int refreshCnt = 0;
 	NewsAdapter mAdapter;
 	String text;
 	int channel_id;
 	ImageView detail_loading;
 	public final static int SET_NEWSLIST = 0;
-	//Toast提示框
+	//Toast锟斤拷示锟斤拷
 	private RelativeLayout notify_view;
 	private TextView notify_view_text;
-    //类别对应的获取新闻条目的url
+    //锟斤拷锟斤拷应锟侥伙拷取锟斤拷锟斤拷锟斤拷目锟斤拷url
     private String url;
-    
+    int page = 1; //椤垫暟
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -50,7 +56,6 @@ public class NewsFragment extends Fragment{
 		text = args != null ? args.getString("text") : "";
 		channel_id = args != null ? args.getInt("id", 0) : 0;
         url = AppApplication.getApp().getConfig().getUrlByID(channel_id);
-		initData(url);
 		super.onCreate(savedInstanceState);
 	}
 
@@ -67,33 +72,7 @@ public class NewsFragment extends Fragment{
 		this.activity = activity;
 		super.onAttach(activity);
 	}
-//	/** 此方法意思为fragment是否可见 ,可见时候加载数据 */
-//	@Override
-//	public void setUserVisibleHint(boolean isVisibleToUser) {
-//		if (isVisibleToUser) {
-//			//fragment可见时加载数据
-//			if(newses !=null && newses.size() !=0){
-//				handler.obtainMessage(SET_NEWSLIST).sendToTarget();
-//			}else{
-//				new Thread(new Runnable() {
-//					@Override
-//					public void run() {
-//						// TODO Auto-generated method stub
-//						try {
-//							Thread.sleep(2);
-//						} catch (InterruptedException e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//						}
-//						handler.obtainMessage(SET_NEWSLIST).sendToTarget();
-//					}
-//				}).start();
-//			}
-//		}else{
-//			//fragment不可见时不执行操作
-//		}
-//		super.setUserVisibleHint(isVisibleToUser);
-//	}
+
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -103,85 +82,55 @@ public class NewsFragment extends Fragment{
 		mListView = (XListView) view.findViewById(R.id.mListView);
 		TextView item_textview = (TextView)view.findViewById(R.id.item_textview);
 		detail_loading = (ImageView)view.findViewById(R.id.detail_loading);
-		//Toast提示框
+		//Toast锟斤拷示锟斤拷
 		notify_view = (RelativeLayout)view.findViewById(R.id.notify_view);
 		notify_view_text = (TextView)view.findViewById(R.id.notify_view_text);
 		item_textview.setText(text);
+		init(url);
+
 		return view;
 	}
-
-	private void initData(final String url) {
-		//新开线程连接网络获取新闻数据
-		new Thread(new Runnable()
-		{
-			@Override
-			public void run()
-			{
-                newses = NewsTools.getNewsList(url, 1);
-                handler.obtainMessage(SET_NEWSLIST).sendToTarget();
-			}
-		}).start();
-	}
-	
-	Handler handler = new Handler() {
-		@Override
-		public void handleMessage(Message msg) {
-			// TODO Auto-generated method stub
-			switch (msg.what) {
-			case SET_NEWSLIST:
-				detail_loading.setVisibility(View.GONE);
-				if(mAdapter == null){
-					mAdapter = new NewsAdapter(activity, newses);
-					//判断是不是城市的频道
-					/*if(channel_id == Constants.CHANNEL_CITY){
-						//是城市频道
-						mAdapter.setCityChannel(true);
-						initCityChannel();
-					}*/
-				}
-				mListView.setAdapter(mAdapter);
-				mListView.setOnScrollListener(mAdapter);
-			//	mListView.setPinnedHeaderView(LayoutInflater.from(activity).inflate(R.layout.list_item_section, mListView, false));
-				mListView.setOnItemClickListener(new OnItemClickListener() {
-
-					@Override
-					public void onItemClick(AdapterView<?> parent, View view,
-							int position, long id) {
-                        Intent intent = new Intent(activity, NewsDetailsActivity.class);
-                        News news = mAdapter.getNewses().get(position);
-                        intent.putExtra("url", "http://wellan.zuel.edu.cn/"+news.getUrl());
-                        startActivity(intent);
-
-					}
-				});
-				if(channel_id == 1){
-					initNotify();
-				}
-				break;
-			default:
-				break;
-			}
-			super.handleMessage(msg);
-		}
-	};
-	
-	/* 初始化选择城市的header*/
-	/*public void initCityChannel() {
-		View headview = LayoutInflater.from(activity).inflate(R.layout.city_category_list_tip, null);
-		TextView chose_city_tip = (TextView) headview.findViewById(R.id.chose_city_tip);
-		chose_city_tip.setOnClickListener(new OnClickListener() {
+	private void initView(){
+		mAdapter = new NewsAdapter(activity, newses);
+		mListView.setPullLoadEnable(true);
+		mListView.setAdapter(mAdapter);
+		mListView.setXListViewListener(this);
+		mListView.setOnScrollListener(mAdapter);
+		mListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent(activity, CityListActivity.class);
+			public void onItemClick(AdapterView<?> parent, View view,
+									int position, long id) {
+				Intent intent = new Intent(activity, NewsDetailsActivity.class);
+				News news = mAdapter.getNewses().get(position-1);
+				Bundle bundle = new Bundle();
+				bundle.putSerializable("news", news);
+				intent.putExtras(bundle);
+				//intent.putExtra("url", "http://wellan.zuel.edu.cn/" + news.getUrl());
 				startActivity(intent);
 			}
 		});
-		mListView.addHeaderView(headview);
-	}*/
+		mHandler = new Handler();
+	}
+	private void init(final String url) {
+
+		AsyncTask<Void,Void,Void> ATgetNewes = new AsyncTask<Void, Void, Void>() {
+			@Override
+			protected Void doInBackground(Void... voids) {
+				newses = NewsTools.getNewsList(url,page);
+				Log.d(TAG,newses.toString());
+				return null;
+			}
+			protected void onPostExecute(Void v){
+				Log.d(TAG, "###########################onPostExecute");
+				initView();
+
+			}
+		};
+		ATgetNewes.execute();
+	}
 	
-	/* 初始化通知栏目*/
+
 	private void initNotify() {
 		new Handler().postDelayed(new Runnable() {
 			
@@ -201,7 +150,7 @@ public class NewsFragment extends Fragment{
 			}
 		}, 1000);
 	}
-	/* 摧毁视图 */
+
 	@Override
 	public void onDestroyView() {
 		// TODO Auto-generated method stub
@@ -209,11 +158,70 @@ public class NewsFragment extends Fragment{
 		Log.d("onDestroyView", "channel_id = " + channel_id);
 		mAdapter = null;
 	}
-	/* 摧毁该Fragment，一般是FragmentActivity 被摧毁的时候伴随着摧毁 */
+
 	@Override
 	public void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
 		Log.d(TAG, "channel_id = " + channel_id);
+	}
+
+	private void onLoad() {
+		mListView.stopRefresh();
+		mListView.stopLoadMore();
+		//mListView.setRefreshTime("");
+	}
+
+	public void onRefresh() {
+		mHandler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				page = 1;
+				AsyncTask<Void,Void,Void> ATgetLatestNewes = new AsyncTask<Void, Void, Void>() {
+					@Override
+					protected Void doInBackground(Void... voids) {
+						newses.removeAll(newses);
+						newses = NewsTools.getNewsList(url,page);
+						Log.d(TAG,newses.toString());
+						mAdapter = new NewsAdapter(getActivity(),newses);
+						return null;
+					}
+					protected void onPostExecute(Void v){
+						Log.d(TAG, "###########################33333onPostExecute");
+						mListView.setAdapter(mAdapter);
+						//mAdapter.notifyDataSetChanged();
+
+					}
+				};
+				ATgetLatestNewes.execute();
+				onLoad();
+			}
+		}, 2000);
+	}
+
+	public void onLoadMore() {
+		mHandler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				page++;
+				AsyncTask<Void,Void,Void> ATgetMoreNewes = new AsyncTask<Void, Void, Void>() {
+					@Override
+					protected Void doInBackground(Void... voids) {
+						ArrayList<News> moreNewses = new ArrayList<News>();
+						moreNewses = NewsTools.getNewsList(url,page);
+						newses.addAll(moreNewses);
+						Log.d(TAG,newses.toString());
+						return null;
+					}
+					protected void onPostExecute(Void v){
+						mAdapter.notifyDataSetChanged();
+						Log.d(TAG,"###########################22222onPostExecute");
+					}
+				};
+				ATgetMoreNewes.execute();
+
+				onLoad();
+			}
+		}, 2000);
 	}
 }

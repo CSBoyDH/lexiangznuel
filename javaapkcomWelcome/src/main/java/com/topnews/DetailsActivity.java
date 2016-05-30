@@ -43,12 +43,12 @@ public class DetailsActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.details);
-		setNeedBackGesture(true);//设置需要手势监听
+		setNeedBackGesture(true);
 		getData();
 		initView();
 		initWebView();
 	}
-	/* 获取传递过来的数据 */
+
 	private void getData() {
 		news = (NewsEntity) getIntent().getSerializableExtra("news");
 		news_url = news.getSource_url();
@@ -62,15 +62,13 @@ public class DetailsActivity extends BaseActivity {
 		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
 		if (!TextUtils.isEmpty(news_url)) {
 			WebSettings settings = webView.getSettings();
-			settings.setJavaScriptEnabled(true);//设置可以运行JS脚本
-//			settings.setTextZoom(120);//Sets the text zoom of the page in percent. The default is 100.
+			settings.setJavaScriptEnabled(true);
+			settings.setBlockNetworkImage(false);
 			settings.setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
-//			settings.setUseWideViewPort(true); //打开页面时， 自适应屏幕 
-//			settings.setLoadWithOverviewMode(true);//打开页面时， 自适应屏幕 
-			settings.setSupportZoom(false);// 用于设置webview放大
+
+			settings.setSupportZoom(false);
 			settings.setBuiltInZoomControls(false);
 			webView.setBackgroundResource(R.color.transparent);
-			// 添加js交互接口类，并起别名 imagelistner
 			webView.addJavascriptInterface(new JavascriptInterface(getApplicationContext()),"imagelistner");
 			webView.setWebChromeClient(new MyWebChromeClient());
 			webView.setWebViewClient(new MyWebViewClient());
@@ -82,9 +80,7 @@ public class DetailsActivity extends BaseActivity {
 		title = (TextView) findViewById(R.id.title);
 		progressBar = (ProgressBar) findViewById(R.id.ss_htmlprogessbar);
 		customview_layout = (FrameLayout) findViewById(R.id.customview_layout);
-		//底部栏目
 		action_comment_count = (TextView) findViewById(R.id.action_comment_count);
-		
 		progressBar.setVisibility(View.VISIBLE);
 		title.setTextSize(13);
 		title.setVisibility(View.VISIBLE);
@@ -109,12 +105,13 @@ public class DetailsActivity extends BaseActivity {
 		@Override
 		protected void onPostExecute(String data) {
 			webView.loadDataWithBaseURL (null, data, "text/html", "utf-8",null);
+
+
 		}
 	}
 
-	// 注入js函数监听
+
 	private void addImageClickListner() {
-		// 这段js函数的功能就是，遍历所有的img几点，并添加onclick函数，在还是执行的时候调用本地接口传递url过去
 		webView.loadUrl("javascript:(function(){"
 				+ "var objs = document.getElementsByTagName(\"img\");"
 				+ "var imgurl=''; " + "for(var i=0;i<objs.length;i++)  " + "{"
@@ -124,7 +121,7 @@ public class DetailsActivity extends BaseActivity {
 				+ "    }  " + "}" + "})()");
 	}
 
-	// js通信接口
+
 	public class JavascriptInterface {
 
 		private Context context;
@@ -135,12 +132,12 @@ public class DetailsActivity extends BaseActivity {
 
 		public void openImage(String img) {
 
-			//
+
 			String[] imgs = img.split(",");
 			ArrayList<String> imgsUrl = new ArrayList<String>();
 			for (String s : imgs) {
 				imgsUrl.add(s);
-				Log.i("图片的URL>>>>>>>>>>>>", s);
+				Log.i("图片锟斤拷URL>>>>>>>>>>>>", s);
 			}
 			Intent intent = new Intent();
 			intent.putStringArrayListExtra("infos", imgsUrl);
@@ -150,7 +147,7 @@ public class DetailsActivity extends BaseActivity {
 		}
 	}
 
-	// 监听
+
 	private class MyWebViewClient extends WebViewClient {
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -161,7 +158,7 @@ public class DetailsActivity extends BaseActivity {
 		public void onPageFinished(WebView view, String url) {
 			view.getSettings().setJavaScriptEnabled(true);
 			super.onPageFinished(view, url);
-			// html加载完成之后，添加监听图片的点击js函数
+
 			addImageClickListner();
 			progressBar.setVisibility(View.GONE);
 			webView.setVisibility(View.VISIBLE);
