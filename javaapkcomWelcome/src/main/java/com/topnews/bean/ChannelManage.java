@@ -63,7 +63,7 @@ public class ChannelManage {
 		channelDao.clearFeedTable();
 	}
 	/**
-	 * 获取其他的频道
+	 * 获取用户的频道
 	 * @return 数据库存在用户配置 ? 数据库内的用户选择频道 : 默认用户选择频道 ;
 	 */
 	public List<ChannelItem> getUserChannel() {

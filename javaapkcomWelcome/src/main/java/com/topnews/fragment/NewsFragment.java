@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,8 +21,7 @@ import com.topnews.R;
 import com.topnews.adapter.NewsAdapter;
 import com.topnews.app.AppApplication;
 import com.topnews.bean.News;
-import com.topnews.tool.NewsTools;
-import com.topnews.view.HeadListView;
+import com.topnews.service.NewsTools;
 import com.topnews.view.xlistview.XListView;
 
 import java.util.ArrayList;
