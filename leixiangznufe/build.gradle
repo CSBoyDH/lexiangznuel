@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
-    android{compileOptions.encoding="GBK"}
+    compileOptions.encoding="GBK"
     defaultConfig {
         applicationId "com.topnews"
         minSdkVersion 17
