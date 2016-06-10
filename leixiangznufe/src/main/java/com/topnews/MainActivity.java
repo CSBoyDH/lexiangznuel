@@ -88,8 +88,8 @@ public class MainActivity extends FragmentActivity {
 		shade_left = (ImageView) findViewById(R.id.shade_left);
 		shade_right = (ImageView) findViewById(R.id.shade_right);
 		top_head = (ImageView) findViewById(R.id.top_head);
-		top_more = (ImageView) findViewById(R.id.top_more);
-		top_refresh = (ImageView) findViewById(R.id.top_refresh);
+		//top_more = (ImageView) findViewById(R.id.top_more);
+		//top_refresh = (ImageView) findViewById(R.id.top_refresh);
 		top_progress = (ProgressBar) findViewById(R.id.top_progress);
 		button_more_columns.setOnClickListener(new OnClickListener() {
 			

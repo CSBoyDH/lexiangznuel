@@ -42,7 +42,7 @@
         android:background="@drawable/badge_titlebar"
         android:visibility="gone" />
 
-    <ImageView
+    <!--<ImageView
         android:id="@+id/top_more"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
@@ -50,7 +50,7 @@
         android:layout_centerVertical="true"
         android:gravity="center"
         android:scaleType="centerInside"
-        android:src="@drawable/right_drawer" />
+        android:src="@drawable/right_drawer" />-->
 
     <TextView
         android:id="@+id/top_right_count"
@@ -96,14 +96,14 @@
                 android:visibility="gone" />
         </FrameLayout>
 
-        <ImageView
+        <!--<ImageView
             android:id="@+id/top_refresh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/title_parent"
             android:padding="3.0dip"
-            android:src="@drawable/refreshicon_titlebar" />
+            android:src="@drawable/refreshicon_titlebar" />-->
 
         <ProgressBar
             android:id="@+id/top_progress"

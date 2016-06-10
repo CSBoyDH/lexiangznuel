@@ -50,12 +50,12 @@ public class NewsDetailsActivity extends BaseActivity {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.details);
-        setNeedBackGesture(true);//设置需要手势监听
+        setNeedBackGesture(true);
         getData();
         initView();
         initWebView();
     }
-    /* 获取传递过来的数据 */
+
     private void getData() {
         news  = (News) getIntent().getSerializableExtra("news");
         news_url = "http://wellan.zuel.edu.cn/" + news.getUrl();
@@ -73,8 +73,8 @@ public class NewsDetailsActivity extends BaseActivity {
             settings.setJavaScriptEnabled(true);//设置可以运行JS脚本
 //			settings.setTextZoom(120);//Sets the text zoom of the page in percent. The default is 100.
             settings.setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
-//			settings.setUseWideViewPort(true); //打开页面时， 自适应屏幕
-//			settings.setLoadWithOverviewMode(true);//打开页面时， 自适应屏幕
+//			settings.setUseWideViewPort(true);
+//			settings.setLoadWithOverviewMode(true);
             settings.setSupportZoom(false);// 用于设置webview放大
             settings.setBuiltInZoomControls(false);
             webView.setBackgroundResource(R.color.transparent);
@@ -123,7 +123,7 @@ public class NewsDetailsActivity extends BaseActivity {
 
     // 注入js函数监听
     private void addImageClickListner() {
-        // 这段js函数的功能就是，遍历所有的img几点，并添加onclick函数，在还是执行的时候调用本地接口传递url过去
+
         webView.loadUrl("javascript:(function(){"
                 + "var objs = document.getElementsByTagName(\"img\");"
                 + "var imgurl=''; " + "for(var i=0;i<objs.length;i++)  " + "{"
