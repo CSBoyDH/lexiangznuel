@@ -33,7 +33,7 @@ public class ImageShowActivity extends BaseActivity {
 	private ImageShowViewPager image_pager;
 	private TextView page_number;
 	/** 图片下载按钮 */
-	private ImageView download;
+	//private ImageView download;
 	/** 图片列表 */
 	private ArrayList<String> imgsUrl;
 	/** PagerAdapter */
@@ -56,7 +56,7 @@ public class ImageShowActivity extends BaseActivity {
 	private void initView() {
 		image_pager = (ImageShowViewPager) findViewById(R.id.image_pager);
 		page_number = (TextView) findViewById(R.id.page_number);
-		download = (ImageView) findViewById(R.id.download);
+		//download = (ImageView) findViewById(R.id.download);
 		image_pager.setOnPageChangeListener(new OnPageChangeListener() {
 			
 			@Override
@@ -76,13 +76,7 @@ public class ImageShowActivity extends BaseActivity {
 				
 			}
 		});
-		download.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				String strFileName = imgsUrl.toString();
-				saveImage(strFileName);
-			}
-		});
+
 	}
 	public static String getSDPath()
 	{
