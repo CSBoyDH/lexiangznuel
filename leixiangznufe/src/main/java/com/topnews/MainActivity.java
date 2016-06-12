@@ -54,7 +54,7 @@ public class MainActivity extends FragmentActivity {
 	private int mItemWidth = 0;
 	private ArrayList<Fragment> fragments = new ArrayList<Fragment>();
 	private RelativeLayout ours_btn;
-	protected SlidingMenu side_drawer;
+
 	/** head 头部 的中间的loading*/
 	private ProgressBar top_progress;
 	/** head 头部 中间的刷新按钮*/
@@ -257,7 +257,7 @@ public class MainActivity extends FragmentActivity {
 	}
 	protected void initSlidingMenu() {//***************侧拉BUG**************
 
-		final SlidingMenu menu = new SlidingMenu(this);
+		final SlidingMenu menu= new SlidingMenu(this);
 		top_head.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -299,24 +299,22 @@ public class MainActivity extends FragmentActivity {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		// TODO Auto-generated method stub
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			if(side_drawer.isMenuShowing() ||side_drawer.isSecondaryMenuShowing()){
-				side_drawer.showContent();
-			}else {
-				if ((System.currentTimeMillis() - mExitTime) > 2000) {
-					Toast.makeText(this, "再按一次退出",
-							Toast.LENGTH_SHORT).show();
-					mExitTime = System.currentTimeMillis();
-				} else {
-					finish();
-				}
+
+			if ((System.currentTimeMillis() - mExitTime) > 2000) {
+				Toast.makeText(this, "再按一次退出",
+						Toast.LENGTH_SHORT).show();
+				mExitTime = System.currentTimeMillis();
+			} else {
+				finish();
 			}
+
 			return true;
 		}
 		//拦截MENU按钮点击事件，让他无任何操作
 		if (keyCode == KeyEvent.KEYCODE_MENU) {
 			return true;
 		}
-		return super.onKeyDown(keyCode, event);
+		return onKeyDown(keyCode, event);
 	}
 	
 	@Override
