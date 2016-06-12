@@ -27,7 +27,7 @@ import com.topnews.bean.ChannelManage;
 import com.topnews.fragment.NewsFragment;
 import com.topnews.tool.BaseTools;
 import com.topnews.view.ColumnHorizontalScrollView;
-import com.topnews.view.DrawerView;
+
 
 import java.util.ArrayList;
 /**
@@ -53,9 +53,8 @@ public class MainActivity extends FragmentActivity {
 	/** Item宽度 */
 	private int mItemWidth = 0;
 	private ArrayList<Fragment> fragments = new ArrayList<Fragment>();
-	
+	private RelativeLayout ours_btn;
 	protected SlidingMenu side_drawer;
-	
 	/** head 头部 的中间的loading*/
 	private ProgressBar top_progress;
 	/** head 头部 中间的刷新按钮*/
@@ -100,7 +99,7 @@ public class MainActivity extends FragmentActivity {
 				overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 			}
 		});
-		top_head.setOnClickListener(new OnClickListener() {
+		/*top_head.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -111,7 +110,7 @@ public class MainActivity extends FragmentActivity {
 					side_drawer.showMenu();
 				}
 			}
-		});
+		});*/
 	/*	top_more.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -256,10 +255,44 @@ public class MainActivity extends FragmentActivity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+	protected void initSlidingMenu() {//***************侧拉BUG**************
 
-	protected void initSlidingMenu() {
-		side_drawer = new DrawerView(this).initSlidingMenu();
+		final SlidingMenu menu = new SlidingMenu(this);
+		top_head.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				menu.toggle();
+			}
+		});
+		menu.setMode(SlidingMenu.LEFT);
+		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+		menu.setShadowWidthRes(R.dimen.shadow_width);
+		menu.setShadowDrawable(R.drawable.shadow);
+		menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+		menu.setBehindWidth(500);
+		menu.setFadeDegree(0.35f);
+		menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+		menu.setMenu(R.layout.left_drawer_fragment);
+		ours_btn =(RelativeLayout)menu.findViewById(R.id.ours_btn);
+		ours_btn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				switch (v.getId()) {
+					case R.id.ours_btn:
+						//Toast.makeText(MainActivity.this,"keyi",Toast.LENGTH_LONG).show();
+						break;
+
+					default:
+						break;
+				}
+			}
+		});
+
 	}
+
+	/*//protected void initSlidingMenu() {
+		side_drawer = new DrawerView(this).initSlidingMenu();
+	}*/
 	
 	private long mExitTime;
 	@Override

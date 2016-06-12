@@ -4,9 +4,13 @@
     <file url="file://$PROJECT_DIR$/leixiangznufe/src/main/java/com/topnews/ChannelActivity.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/leixiangznufe/src/main/java/com/topnews/ImageShowActivity.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/leixiangznufe/src/main/java/com/topnews/MainActivity.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/leixiangznufe/src/main/java/com/topnews/SettingsActivity.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/leixiangznufe/src/main/java/com/topnews/adapter/ImagePagerAdapter.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/leixiangznufe/src/main/java/com/topnews/config/Config.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/leixiangznufe/src/main/java/com/topnews/tool/DataTools.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/leixiangznufe/src/main/java/com/topnews/view/ColumnHorizontalScrollView.java" charset="GBK" />
-    <file url="PROJECT" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/leixiangznufe/src/main/java/com/topnews/view/DrawerView.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/leixiangznufe/src/main/java/com/topnews/view/SwitchButton.java" charset="GBK" />
+    <file url="PROJECT" charset="GBK" />
   </component>
 </project>

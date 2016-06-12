@@ -56,11 +56,11 @@ public class DrawerView implements OnClickListener{
 				
 			}
 		});
-		initView();
+		//initView();
 		return localSlidingMenu;
 	}
 
-	private void initView() {
+	/*private void initView() {
 		night_mode_btn = (SwitchButton)localSlidingMenu.findViewById(R.id.night_mode_btn);
 		night_mode_text = (TextView)localSlidingMenu.findViewById(R.id.night_mode_text);
 		night_mode_btn.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -86,7 +86,7 @@ public class DrawerView implements OnClickListener{
 		
 		setting_btn =(RelativeLayout)localSlidingMenu.findViewById(R.id.setting_btn);
 		setting_btn.setOnClickListener(this);
-	}
+	}*/
 
 	@Override
 	public void onClick(View v) {

@@ -64,55 +64,11 @@ public class NewsAdapter extends BaseAdapter implements AbsListView.OnScrollList
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		String newsTime = formatter.format(news.getDate());
 		getTextViewByViewAndId(convertView,R.id.news_date).setText(newsTime);
-//		getTextViewByViewAndId(convertView, R.id.fragment_techNews_listview_details).setText((techNews.getLongTitle()));
-
-
-//		ImageView imageView = (ImageView)convertView.findViewById(R.id.fragment_techNews_listview_photo);
-//		imageView.setImageResource(R.drawable.img_temp);
-//		imageView.setTag(techNews.getKpic());
-//
-//		if(TextUtils.isEmpty(techNews.getKpic())){
-//			imageView.setVisibility(View.GONE);
-//		}else{
-//			imageView.setVisibility(View.VISIBLE);
-//			if(map.get(techNews.getKpic())!=null&&map.get(techNews.getKpic()).get()!=null){
-//				imageView.setImageBitmap(map.get(techNews.getKpic()).get());
-//			}else{
-//				MyAsyncTaskGetBitmap myAsyncTaskGetBitmap = new MyAsyncTaskGetBitmap();
-//				myAsyncTaskGetBitmap.targetUrl = techNews.getKpic();
-//				myAsyncTaskGetBitmap.imageView = imageView;
-//				myAsyncTaskGetBitmap.execute("");
-//			}
-//		}
-
-
-//		getTextViewByViewAndId(convertView, R.id.fragment_techNews_listview_date).setText(techNews.getPubDate());
-//		getTextViewByViewAndId(convertView, R.id.fragment_techNews_listview_reply_Num).setText(techNews.getComment());
-//		getTextViewByViewAndId(convertView, R.id.fragment_techNews_listview_agree_num).setText(String.valueOf(techNews.getCommentCountInfo().getPraise()));
 
 		return convertView;
 	}
 
-//
-//	public class MyAsyncTaskGetBitmap extends AsyncTask<String, String, Bitmap>
-//	{
-//		ImageView imageView ;
-//
-//		String targetUrl;
-//		@Override
-//		protected Bitmap doInBackground(String... imageViews) {
-//			Bitmap bitmap = GetBitmapUtil.getBitmapByUrl(targetUrl);
-//			return bitmap;
-//		}
-//		@Override
-//		protected void onPostExecute(Bitmap bitmap) {
-//			map.put(targetUrl, new SoftReference<Bitmap>(bitmap));
-//			if(imageView.getTag().equals(targetUrl)){
-//				imageView.setImageBitmap(bitmap);
-//			}
-//		}
-//
-//	}
+
 
 	public TextView getTextViewByViewAndId(View view, int id){
 		return (TextView)view.findViewById(id);
