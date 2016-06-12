@@ -57,7 +57,7 @@ public class MainActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		mScreenWidth = BaseTools.getWindowsWidth(this);
-		mItemWidth = mScreenWidth / 5;// һ��Item���Ϊ��Ļ��1/7
+		mItemWidth = mScreenWidth / 5;
 		initView();
 		initSlidingMenu();
 	}
@@ -155,8 +155,7 @@ public class MainActivity extends FragmentActivity {
 				        	  mViewPager.setCurrentItem(i);
 				          }
 			          }
-					//����˵��ѡ�����Ŀ��������Ҫ
-			          //Toast.makeText(getApplicationContext(), userChannelList.get(v.getId()).getName(), Toast.LENGTH_SHORT).show();
+
 				}
 			});
 			mRadioGroup_content.addView(columnTextView, i ,params);
@@ -175,7 +174,7 @@ public class MainActivity extends FragmentActivity {
 			// mColumnHorizontalScrollView.smoothScrollTo((position - 2) *
 			// mItemWidth , 0);
 		}
-		//�ж��Ƿ�ѡ��
+
 		for (int j = 0; j <  mRadioGroup_content.getChildCount(); j++) {
 			View checkView = mRadioGroup_content.getChildAt(j);
 			boolean ischeck;
@@ -189,7 +188,7 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	private void initFragment() {
-		fragments.clear();//���
+		fragments.clear();
 		int count =  userChannelList.size();
 		for(int i = 0; i< count;i++){
 			Bundle data = new Bundle();
@@ -228,7 +227,7 @@ public class MainActivity extends FragmentActivity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	protected void initSlidingMenu() {//***************����BUG**************
+	protected void initSlidingMenu() {
 
 		final SlidingMenu menu= new SlidingMenu(this);
 		top_head.setOnClickListener(new View.OnClickListener() {
@@ -275,7 +274,7 @@ public class MainActivity extends FragmentActivity {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 
 			if ((System.currentTimeMillis() - mExitTime) > 2000) {
-				Toast.makeText(this, "再按一次退出",
+				Toast.makeText(this, "�ٰ�һ���˳�",
 						Toast.LENGTH_SHORT).show();
 				mExitTime = System.currentTimeMillis();
 			} else {
