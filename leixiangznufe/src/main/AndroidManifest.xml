@@ -23,6 +23,8 @@
         <activity android:name="com.topnews.MainActivity" >
 
         </activity>
+        <activity android:name="com.topnews.AboutActivity" >
+        </activity>
         <activity android:name="com.topnews.ChannelActivity" >
         </activity>
         <activity android:name="com.topnews.DetailsActivity" >
