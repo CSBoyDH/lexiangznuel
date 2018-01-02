@@ -171,7 +171,7 @@
             android:layout_gravity="top|center"
             android:paddingLeft="30.0dip"
             android:paddingRight="30.0dip"
-            android:text="周俊明 李智辉 周子新 潘延朋 邓  豪 戴玲玲 李  妍 "
+            android:text="文澜网络-DH "
             android:id="@+id/textName"
             android:gravity="center"
             android:textSize="24dp" />

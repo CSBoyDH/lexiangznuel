@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion 24
+    buildToolsVersion "25.0.2"
     compileOptions.encoding="GBK"
     defaultConfig {
         applicationId "com.topnews"
-        minSdkVersion 17
-        targetSdkVersion 23
+        minSdkVersion 15
+        targetSdkVersion 24
     }
 
     buildTypes {

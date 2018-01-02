@@ -193,8 +193,8 @@ public class DragGrid extends GridView {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				int x = (int) ev.getX();// 长安事件的X位置
-				int y = (int) ev.getY();// 长安事件的y位置
+				int x = (int) ev.getX();// 长按事件的X位置
+				int y = (int) ev.getY();// 长按事件的y位置
 
 				startPosition = position;// 第一次点击的postion
 				dragPosition = position;
